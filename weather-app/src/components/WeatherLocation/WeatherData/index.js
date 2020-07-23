@@ -1,25 +1,27 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import WeatherExtraInfo from './WeatherExtraInfo';
 import WeatherTemperature from './WeatherTemperature'
 import './styles.css';
-import {
-CLOUD,
-CLOUDY,
-SUN,
-RAIN,
-SNOW,
-WINDY,
-FOG,
-} from './../../../constants/weathers'
-const WeatherData=()=>(
-    <div className="WeatherDataCont">
+
+const WeatherData=({data: {temperature, weatherState, humidity, wind}})=>{
+    //const {temperature, weatherState, humidity, wind} = data;
+    return(<div className="WeatherDataCont">
         <WeatherTemperature 
-        temperature={20}
-        weatherState={RAIN}
+        temperature={temperature}
+        weatherState={weatherState}
         />
-        <WeatherExtraInfo  humidity={80} wind={"10 m/s"}></WeatherExtraInfo>
-    </div>
-   
-);
+        <WeatherExtraInfo  humidity={humidity} wind={wind}></WeatherExtraInfo>
+    </div>);
+};
+
+WeatherData.propTypes ={
+    data: PropTypes.shape({
+        temperature: PropTypes.number.isRequired,
+        weatherState: PropTypes.string.isRequired,
+        humidity: PropTypes.number.isRequired,
+        wind: PropTypes.string.isRequired,
+    }),
+}
 
 export default WeatherData;
